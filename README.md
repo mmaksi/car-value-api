@@ -103,3 +103,9 @@ We have an `Injector` or a `container` in which we register all the classes and 
 
 1. Add injected dependency to the `exports` list
 2. Add the module X into module Y and add it to the list of `imports`
+
+## Tips
+
+Use `this.repo.create()` before `this.repo.save(user)` and don't use the `save()` or `remove()` methods alone.
+
+One scenario where creating an entity instance before saving it is beneficila is if we want to use `hooks` inside the entity class. Those hooks will be executed only if an instance was created or updated or deleted. Always create an entity instance before performing CRUD operations.

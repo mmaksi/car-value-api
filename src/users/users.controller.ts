@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -15,21 +16,20 @@ import { UsersService } from './users.service';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { Serialize } from 'src/interceptors/serialize.intercept';
 import { UserDto } from './dtos/user.dto';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 @Serialize(UserDto)
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService,
+  ) {}
 
   @Post('/signup')
   async createUser(@Body() body: CreateUserDto) {
     const { email, password } = body;
-    try {
-      const entity = await this.usersService.createUser(email, password);
-      return entity;
-    } catch (error) {
-      return { message: `failed to save the user ${error}` };
-    }
+    return await this.authService.signup(email, password);
   }
 
   @Get('/:id')
@@ -42,7 +42,7 @@ export class UsersController {
 
   @Get()
   async findAllUsers(@Query('email') email: string) {
-    return await this.usersService.findAllUsers(email);
+    return await this.usersService.find(email);
   }
 
   @Delete('/:id')

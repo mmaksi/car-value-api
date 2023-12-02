@@ -113,3 +113,5 @@ One scenario where creating an entity instance before saving it is beneficila is
 When an interceptor is defined through a decorator on a controller, the interceptor's class will be instantiated on every request to that controller. So you have to inject the interceptor into the DI system by the `@Injectable()` decorator.
 
 To access the logged-in user on every request made to a certain controller by a custom decorator, create an interceptor that uses the user's session object to attach the user object to the `request` object that can be consumed by a custom param decrorator because the param decorator cannot tap into the services directly.
+
+When fetching a user from the DB, the asscoication with the Report table is not fetched auatomatically.

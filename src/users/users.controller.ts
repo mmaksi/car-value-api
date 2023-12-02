@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -30,6 +29,12 @@ export class UsersController {
   async createUser(@Body() body: CreateUserDto) {
     const { email, password } = body;
     return await this.authService.signup(email, password);
+  }
+
+  @Post('/signin')
+  async signin(@Body() body: CreateUserDto) {
+    const { email, password } = body;
+    return await this.authService.signin(email, password);
   }
 
   @Get('/:id')

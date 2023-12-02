@@ -8,7 +8,7 @@ async function bootstrap() {
   app.use(
     cookieSession({
       keys: ['secretencryptionkey'],
-      maxAge: 30 * 1000,
+      maxAge: 60 * 1000,
     }),
   );
   app.useGlobalPipes(

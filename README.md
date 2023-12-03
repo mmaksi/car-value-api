@@ -119,3 +119,15 @@ When fetching a user from the DB, the asscoication with the Report table is not 
 Request --> Middlewares --> Guards --> Interceptors --> Request Handler --> Interceptor --> Response
 
 The `CurrentUserMiddleware` depends on the `UsersService` through the DI system so it must be configured inside the `UsersModule` even if it is a global middleware.
+
+When setting the `synchronize` to `true` in DB configuration, it means that Postgres will look at the entity object and matches it with the table at hand. It is a very dangerous process to do on production applications.
+
+Migration is a file that has two functions: `up()` and `down()`. The `up()` function describes how to update the structure of our database. The `down()` function describes how to undo the steps in `up()`.
+
+## Creating and Running Migrations During Development and Testing
+
+1. Stop the development server
+2. Use the TypeORM CLI to generate an empty migration file
+3. Add some code to change our our DB in the migration file
+4. Use TypeORM CLI to apply the migration to the DB. TypeORM will execute ONLY entity files + the migration file, then connect to the DB an =d make the changes
+5. DB is updated! Restart the development server

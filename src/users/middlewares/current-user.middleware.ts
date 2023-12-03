@@ -16,13 +16,11 @@ export class CurrentUserMiddleware implements NestMiddleware {
   constructor(private usersService: UsersService) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    console.log('middleware');
     const { userId } = req.session || {};
     if (userId) {
       const user = await this.usersService.findOne(userId);
       //   @ts-ignore
       req.currentUser = user;
-      console.log('currentUser is added to the request object');
     }
     next();
   }

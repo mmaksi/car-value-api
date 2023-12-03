@@ -115,3 +115,7 @@ When an interceptor is defined through a decorator on a controller, the intercep
 To access the logged-in user on every request made to a certain controller by a custom decorator, create an interceptor that uses the user's session object to attach the user object to the `request` object that can be consumed by a custom param decrorator because the param decorator cannot tap into the services directly.
 
 When fetching a user from the DB, the asscoication with the Report table is not fetched auatomatically.
+
+Request --> Middlewares --> Guards --> Interceptors --> Request Handler --> Interceptor --> Response
+
+The `CurrentUserMiddleware` depends on the `UsersService` through the DI system so it must be configured inside the `UsersModule` even if it is a global middleware.

@@ -5,18 +5,12 @@ const cookieSession = require('cookie-session');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(
-    cookieSession({
-      keys: ['secretencryptionkey'],
-      maxAge: 60 * 1000,
-    }),
-  );
-  app.useGlobalPipes(
-    new ValidationPipe({
-      // Removes values from the request body that don't match the dto
-      whitelist: true,
-    }),
-  );
+  (app as any).set('etag', false);
+  app.use((req, res, next) => {
+    res.removeHeader('x-powered-by');
+    res.removeHeader('date');
+    next();
+  });
   await app.listen(3000);
 }
 bootstrap();

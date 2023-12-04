@@ -11,7 +11,6 @@ export class ReportsService {
   constructor(@InjectRepository(Report) private repo: Repository<Report>) {}
 
   createEstimate(estimateDto: GetEstimateDto) {
-    console.log({ estimateDto });
     return this.repo
       .createQueryBuilder()
       .select('AVG(price)', 'price')

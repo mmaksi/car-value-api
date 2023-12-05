@@ -8,7 +8,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { createReportDto } from './dtos/create-report.dto';
+import { CreateReportDto } from './dtos/create-report.dto';
 import { ReportsService } from './reports.service';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { CurrentUser } from 'src/users/decorators/currentUser.decorator';
@@ -18,7 +18,8 @@ import { ReportDto } from './dtos/report.dto';
 import { ApproveReportDto } from './dtos/approve-report.dto';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { GetEstimateDto } from './dtos/get-estimate.dto';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Reports')
 @Controller('reports')
 export class ReportsController {
   constructor(private reportsService: ReportsService) {}
@@ -31,7 +32,7 @@ export class ReportsController {
   @Post()
   @UseGuards(AuthGuard)
   @Serialize(ReportDto)
-  async createReport(@Body() body: createReportDto, @CurrentUser() user: User) {
+  async createReport(@Body() body: CreateReportDto, @CurrentUser() user: User) {
     const report = await this.reportsService.createReport(body, user);
     return report;
   }

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Report } from './report.entity';
 import { Repository } from 'typeorm';
-import { createReportDto } from './dtos/create-report.dto';
+import { CreateReportDto } from './dtos/create-report.dto';
 import { User } from 'src/users/user.entity';
 import { GetEstimateDto } from './dtos/get-estimate.dto';
 
@@ -26,7 +26,7 @@ export class ReportsService {
       .getRawOne();
   }
 
-  createReport(reportDto: createReportDto, user: User) {
+  createReport(reportDto: CreateReportDto, user: User) {
     const report = this.repo.create(reportDto);
     report.user = user; // create the SQL relationship
     return this.repo.save(report);

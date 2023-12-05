@@ -7,7 +7,7 @@ import {
   Min,
 } from 'class-validator';
 
-export class createReportDto {
+export class CreateReportDto {
   @IsString()
   make: string;
 
